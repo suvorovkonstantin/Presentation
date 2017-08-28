@@ -1,0 +1,28 @@
+﻿<Window x:Name="MainWindow1" x:Class="SQLite_template01.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SQLite_template01"
+        mc:Ignorable="d"
+        Title="SQLite Manager" Height="350" Width="525" Closing="Window_Closing">
+    <Window.DataContext>
+        <local:AppContex/>
+    </Window.DataContext>
+    <Grid>
+        <Button x:Name="Refresh_button" Content="Refresh" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <Button x:Name="Drop_button" Content="Drop" HorizontalAlignment="Left" Margin="91,10,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
+        <Button x:Name="Save_button" Content="Save" HorizontalAlignment="Left" Margin="171,10,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_2"/>
+
+
+        <DataGrid CanUserDeleteRows="False"  x:Name="datagrid1" Margin="0,35,0,0" BeginningEdit="datagrid1_BeginningEdit" ItemsSource="{Binding Mode=OneWay}" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Name}" Header="Name" Width="Auto"/>
+                <DataGridTextColumn Binding="{Binding Surname}" Header="Surname" Width="Auto"/>
+                <DataGridTextColumn Binding="{Binding Email}" Header="Email" Width="Auto"/>
+                <DataGridTextColumn Binding="{Binding Phone}" Header="Phone" Width="Auto"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+</Window>
