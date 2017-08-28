@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
@@ -25,9 +26,7 @@ namespace SQLite_template01
         AppContex db;
 
         bool Datagrid_IsModified = false;
-
-        internal AppContex Db { get => db; set => db = value; }
-
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -66,11 +65,11 @@ namespace SQLite_template01
         {
             try
             {
-                Db = new AppContex();
+                db = new AppContex();
 
-                Db.Configuration.ValidateOnSaveEnabled = false;
-                Db.Emlpoyees.Load();
-                datagrid1.ItemsSource = Db.Emlpoyees.Local.ToBindingList();
+                db.Configuration.ValidateOnSaveEnabled = false;
+                db.Emlpoyees.Load();
+                datagrid1.ItemsSource = db.Emlpoyees.Local.ToBindingList();
             }
             catch (Exception ex)
             {
@@ -83,9 +82,10 @@ namespace SQLite_template01
             try
             {
                 if (datagrid1.SelectedItem == null) return;
-                Employee drop_empl = datagrid1.SelectedItem as Employee;
-                Db.Emlpoyees.Remove(drop_empl);
-                Db.SaveChangesAsync();
+                var drop_items = datagrid1.SelectedItems;
+                for(int i = drop_items.Count - 1; i>= 0; --i)
+                    db.Emlpoyees.Remove(drop_items[i] as Employee);
+                Datagrid_IsModified = true;
             }
             catch (Exception ex)
             {
@@ -96,7 +96,7 @@ namespace SQLite_template01
         {
             try
             {
-                Db.SaveChanges();
+                db.SaveChanges();
                 MessageBox.Show("Changes saved to the database.");
                 Load();
                 Datagrid_IsModified = false;
